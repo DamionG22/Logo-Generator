@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DamionG22/Logo-Generator#readme",
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.2.0",
     "inquirer": "^8.2.5",
     "jest": "^29.5.0",
     "svg.js": "^2.7.1"
