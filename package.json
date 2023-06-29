@@ -1,0 +1,24 @@
+{
+  "name": "logo-generator",
+  "version": "1.0.0",
+  "description": "command line application that takes user input to create a logo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DamionG22/Logo-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DamionG22/Logo-Generator/issues"
+  },
+  "homepage": "https://github.com/DamionG22/Logo-Generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.5",
+    "jest": "^29.5.0",
+    "svg.js": "^2.7.1"
+  }
+}
