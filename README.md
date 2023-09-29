@@ -46,3 +46,19 @@
 
   ### GitHub
   [Github Profile](https://github.com/DamionG22)
+
+  ### Walkthrough video link
+  
+  https://drive.google.com/file/d/13dmvnv0Ilt3e6wLNxI5XT7ZUh-EpdUTV/view
+  
+  
+
+
+### Screenshots of generated logo files.
+
+  <img width="462" alt="Screenshot 2023-09-28 192743" src="https://github.com/DamionG22/Logo-Generator/assets/130415895/71f53f8d-ac12-45f8-bd62-3769ed022d7e">
+
+<img width="501" alt="Screenshot 2023-09-28 192758" src="https://github.com/DamionG22/Logo-Generator/assets/130415895/0293a8f8-6ea0-4659-9702-279e4e5913ae">
+
+<img width="494" alt="Screenshot 2023-09-28 192827" src="https://github.com/DamionG22/Logo-Generator/assets/130415895/d37cd328-08a7-45c8-bbe6-cdd431150145">
+
