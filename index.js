@@ -1,86 +1,80 @@
 // imports other modules and files
-const fs = require('fs');
 const inquirer = require('inquirer');
-const { Circle, Triangle, Square } = require('./lib/shapes');
-// prompts user with questions
-const prompts = [
-  {
-    type: 'input',
-    name: 'text',
-    message: 'Enter the text for the logo (up to three characters):',
-    validate: function (input) {
-        // condition for char length requirement.
-      if (input.length > 3) {
-        return 'Please enter up to three characters.';
-      }
-      return true;
-    }
-  },
-  {
-    type: 'input',
-    name: 'textColor',
-    message: 'Enter the text color:',
-    default: 'black'
-  },
-  {
-    type: 'list',
-    name: 'shape',
-    message: 'Select a shape:',
-    choices: ['Circle', 'Triangle', 'Square']
-  },
-  {
-    type: 'input',
-    name: 'shapeColor',
-    message: 'Enter the shape color:',
-    default: 'black'
-  }
-];
-// function that creates a logo based off user input
-function generateLogo(text, textColor, shape, shapeColor) {
-  const draw = SVG().size(300, 200);
-// creates selected shape
-  let shapeElement;
-  switch (shape.toLowerCase()) {
-    case 'circle':
-      shapeElement = new Circle(shapeColor);
+const fs = require('fs');
+const { Triangle, Circle, Square } = require('./lib/shapes');
+
+// Function to prompt the user for input
+async function getUserInput() {
+  // Use Inquirer to collect user input for text, text color, shape, and shape color
+  const userInput = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'text',
+      message: 'Enter up to three characters for the text:',
+    },
+    {
+      type: 'input',
+      name: 'textColor',
+      message: 'Enter text color (keyword or hex):',
+    },
+    {
+      type: 'list',
+      name: 'shape',
+      message: 'Select a shape:',
+      choices: ['Circle', 'Triangle', 'Square'],
+    },
+    {
+      type: 'input',
+      name: 'shapeColor',
+      message: 'Enter shape color (keyword or hex):',
+    },
+  ]);
+
+  return userInput;
+}
+
+// Function to generate the SVG logo
+function generateLogo(userInput) {
+  const { text, textColor, shape, shapeColor } = userInput;
+
+  // Create an instance of the selected shape class
+  let selectedShape;
+  switch (shape) {
+    case 'Circle':
+      selectedShape = new Circle();
       break;
-    case 'triangle':
-      shapeElement = new Triangle(shapeColor);
+    case 'Triangle':
+      selectedShape = new Triangle();
       break;
-    case 'square':
-      shapeElement = new Square(shapeColor);
+    case 'Square':
+      selectedShape = new Square();
       break;
     default:
-      console.log('Invalid shape selected.');
-      return;
+      console.error('Invalid shape selection');
+      process.exit(1);
   }
 
-  draw.svg(shapeElement.render());
+  // Set text and shape colors
+  selectedShape.setTextColor(textColor);
+  selectedShape.setColor(shapeColor);
 
-  const textElement = draw.text(text)
-    .font({ size: 48, fill: textColor })
-    .move(100, 100);
+  // Generate the SVG string
+  const logoSVG = selectedShape.render(text);
 
-  draw.add(textElement);
+  // Write the SVG to a file named logo.svg
+  fs.writeFileSync('logo.svg', logoSVG);
 
-  const svgContent = draw.svg();
-  return svgContent;
-}
-// function to create logo svg file
-function saveLogoAsSVG(svgContent) {
-  const fileName = `logo_${Date.now()}.svg`;
-  fs.writeFile(fileName, svgContent, function (err) {
-    if (err) {
-      console.log('An error occurred while saving the SVG file.');
-      console.error(err);
-    } else {
-      console.log(`Generated ${fileName}`);
-    }
-  });
+  console.log('Generated logo.svg');
 }
 
-inquirer.prompt(prompts).then(answers => {
-  const { text, textColor, shape, shapeColor } = answers;
-  const svgContent = generateLogo(text, textColor, shape, shapeColor);
-  saveLogoAsSVG(svgContent);
-});
+// Main function to run the application
+async function main() {
+  try {
+    const userInput = await getUserInput();
+    generateLogo(userInput);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+main();
